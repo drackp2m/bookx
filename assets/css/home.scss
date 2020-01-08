@@ -1,0 +1,77 @@
+---
+---
+
+@import "colors";
+@import "variables";
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: $main;
+
+  .book {
+    position: relative;
+    transition: transform $bookFlipTransitionDuration ease-in-out;
+    perspective: 1200px;
+
+    .progress {
+      position: absolute;
+      width: 100%;
+      height: 6px;
+      top: -10px;
+      border-radius: 5px;
+      border: solid 1px black;
+      box-sizing: border-box;
+      overflow: hidden;
+      opacity: 0.6;
+      transition: opacity $bookFlipTransitionDuration ease-in-out
+        $progressDelayOpacity;
+
+      &.transparent {
+        opacity: 0;
+      }
+
+      span {
+        display: block;
+        width: 0%;
+        height: 4px;
+        background-color: #888888;
+        transition: width $bookFlipTransitionDuration ease-in-out;
+      }
+    }
+
+    .pages {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      cursor: pointer;
+
+      > .sheet {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 3px 15px 15px 3px;
+        background-color: white;
+        overflow: hidden;
+        transform-origin: left center;
+        transition: transform $bookFlipTransitionDuration ease-in-out,
+          box-shadow $bookShadowTransitionDuration ease-in-out;
+
+        img {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        > *:first-child {
+          transform: rotateY(-180deg);
+        }
+      }
+    }
+  }
+}
