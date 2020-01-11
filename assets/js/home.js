@@ -162,3 +162,16 @@
 })(jQuery);
 
 $("div.book").Book(/* { width: 250, height: 300 } */);
+
+$("div.book").on(
+  "mouse-position",
+  {
+    cocacola: 22,
+    precisionx: 1,
+    debug: 1,
+    colors: true
+  },
+  function(event) {
+    console.log(event.mousePosition);
+  }
+);
