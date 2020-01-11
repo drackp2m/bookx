@@ -1,0 +1,18 @@
+---
+---
+
+body {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: pink;
+
+  .book {
+    position: inherit;
+    width: 250px;
+    height: 250px;
+    background-color: white;
+  }
+}
