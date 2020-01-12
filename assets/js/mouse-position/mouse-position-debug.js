@@ -193,6 +193,7 @@
       return {
         ...{
           distance: this.triangleData.hypotenuse,
+          quadrant: this.quadrant,
           degrees: this.getTotalDegrees()
         },
         ...(this.settings.debug == 0 ? {} : { debug: this.triangleData })

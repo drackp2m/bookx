@@ -110,6 +110,7 @@
     getData() {
       return {
         distance: this.triangleData.hypotenuse,
+        quadrant: this.quadrant,
         degrees: this.getTotalDegrees()
       };
     }

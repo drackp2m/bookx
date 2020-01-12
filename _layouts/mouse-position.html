@@ -8,12 +8,22 @@
     <title>{{ page.title }}</title>
 
     <link rel="stylesheet" href="assets/css/normalize.css" type="text/css" />
-    <link rel="stylesheet" href="assets/css/test.css" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="assets/css/mouse-position.css"
+      type="text/css"
+    />
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
   </head>
 
   <body>
-    <div class="book"></div>
+    <div class="book">
+      <span class="outer"></span><span class="inner"></span>
+      <p class="info">
+        <span class="percentage"></span>
+        <span class="degrees"></span>
+      </p>
+    </div>
 
     <script
       src="assets/js/jquery/jquery-3.4.1.min.js"
