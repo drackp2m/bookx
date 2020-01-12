@@ -20,12 +20,9 @@
   }
 
   class MousePosition {
-    event;
-    axisQuadrants = ["II-I", "II-III", "III-IV", "I-IV", "X"];
-    xOffset;
-    yOffset;
-    quadrant;
-    triangleData;
+    constructor() {
+      this.axisQuadrants = ["II-I", "II-III", "III-IV", "I-IV", "X"];
+    }
 
     run(event) {
       this.event = event;

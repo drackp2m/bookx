@@ -4,6 +4,6 @@ $(".book").on(
     debug: 2
   },
   function(event) {
-    console.log(event.mousePosition);
+    // console.log(event.mousePosition);
   }
 );

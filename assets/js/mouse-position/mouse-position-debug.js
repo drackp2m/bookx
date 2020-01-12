@@ -20,13 +20,9 @@
   }
 
   class MousePosition {
-    event;
-    settings;
-    axisQuadrants = ["II-I", "II-III", "III-IV", "I-IV", "X"];
-    xOffset;
-    yOffset;
-    quadrant;
-    triangleData;
+    constructor() {
+      this.axisQuadrants = ["II-I", "II-III", "III-IV", "I-IV", "X"];
+    }
 
     run(event) {
       this.event = event;
@@ -175,7 +171,7 @@
 
         $("head").prepend(
           $(
-            "<style>.mouse-position-debug{position:absolute;width:100%;height:100%;display:flex;justify-content:center;align-items:center}.center{background-color:black}.center .leg-a, .center .leg-b, .center .hypotenuse{background-color:black}.center{position:relative;width:1px;height:1px}.center .leg-a, .center .leg-b, .center .hypotenuse{position:absolute}.center .leg-a{height:1px}.center .leg-b, .center .hypotenuse{width:1px}.center.II .leg-b, .center.II .hypotenuse{bottom:1px}.center.II-I .leg-b, .center.II-I .hypotenuse{bottom:1px}.center.I .leg-b, .center.I .hypotenuse{bottom:1px}.center.III .leg-b{top:1px}.center.III .hypotenuse{bottom:0;left:-1px}.center.III-IV .leg-b{top:1px}.center.III-IV .hypotenuse{bottom:0;left:-1px}.center.IV .leg-b{top:1px}.center.IV .hypotenuse{bottom:0;left:-1px}.center.II .leg-a{right:1px}.center.II-III .leg-a{right:1px}.center.III .leg-a{right:1px}.center.I .leg-a{left:1px}.center.I .leg-b{right:0}.center.I-IV .leg-a{left:1px}.center.I-IV .leg-b{right:0}.center.IV .leg-a{left:1px}.center.IV .leg-b{right:0}.center.II-III .leg-b{display:none}.center.I-IV .leg-b{display:none}.center.II-III .hypotenuse{display:none}.center.I-IV .hypotenuse{display:none}.center.II-I .hypotenuse{display:none}.center.III-IV .hypotenuse{display:none}.center.I .hypotenuse, .center.III .hypotenuse{transform-origin:bottom left}.center.II .hypotenuse, .center.IV .hypotenuse{transform-origin:bottom right}.center.III .hypotenuse{left:1px}.info{position:absolute;top:10px;left:10px}.info table tr td{color:rgba(0, 0, 0, 0.3)}.info table tr td:last-child{color:rgba(0, 0, 0, 0.4)}</style>"
+            "<style>.mouse-position-debug{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;justify-content:center;align-items:center}.center{background-color:black}.center .leg-a, .center .leg-b, .center .hypotenuse{background-color:black}.center{position:relative;width:1px;height:1px}.center .leg-a, .center .leg-b, .center .hypotenuse{position:absolute}.center .leg-a{height:1px}.center .leg-b, .center .hypotenuse{width:1px}.center.II .leg-b, .center.II .hypotenuse{bottom:1px}.center.II-I .leg-b, .center.II-I .hypotenuse{bottom:1px}.center.I .leg-b, .center.I .hypotenuse{bottom:1px}.center.III .leg-b{top:1px}.center.III .hypotenuse{bottom:0;left:-1px}.center.III-IV .leg-b{top:1px}.center.III-IV .hypotenuse{bottom:0;left:-1px}.center.IV .leg-b{top:1px}.center.IV .hypotenuse{bottom:0;left:-1px}.center.II .leg-a{right:1px}.center.II-III .leg-a{right:1px}.center.III .leg-a{right:1px}.center.I .leg-a{left:1px}.center.I .leg-b{right:0}.center.I-IV .leg-a{left:1px}.center.I-IV .leg-b{right:0}.center.IV .leg-a{left:1px}.center.IV .leg-b{right:0}.center.II-III .leg-b{display:none}.center.I-IV .leg-b{display:none}.center.II-III .hypotenuse{display:none}.center.I-IV .hypotenuse{display:none}.center.II-I .hypotenuse{display:none}.center.III-IV .hypotenuse{display:none}.center.I .hypotenuse, .center.III .hypotenuse{transform-origin:bottom left}.center.II .hypotenuse, .center.IV .hypotenuse{transform-origin:bottom right}.center.III .hypotenuse{left:1px}.info{position:absolute;top:10px;left:10px}.info table tr td{color:rgba(0, 0, 0, 0.3)}.info table tr td:last-child{color:rgba(0, 0, 0, 0.4)}</style>"
           )
         );
       }
