@@ -54,7 +54,7 @@ body {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: 3px 15px 15px 3px;
+        border-radius: 0 15px 15px 0;
         background-color: white;
         overflow: hidden;
         transform-origin: left center;
@@ -72,6 +72,19 @@ body {
           transform: rotateY(-180deg);
         }
       }
+
+      > .mold {
+        position: absolute;
+        width: 5px;
+        height: 100%;
+        overflow: hidden;
+        transform: rotateY(90deg) translateX(1px);
+        transform-origin: left;
+      }
+    }
+
+    &.transition .pages {
+      transition: transform $bookFlipTransitionDuration ease-in-out;
     }
   }
 }

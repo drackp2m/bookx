@@ -46,7 +46,7 @@
         );
       }
 
-      $(this.book).append('<div class="pages"></div>');
+      $(this.book).append('<div class="pages"><div class="mold"></div></div>');
     }
 
     orderSheet(sheets) {
@@ -74,11 +74,18 @@
         );
     }
 
-    putPercentageElement() {
+    addMold() {
+      var frontUrl = $(this.pages[0]).attr("src");
+      $(this.book)
+        .find(".mold")
+        .append(`<img alt="mold" src="${frontUrl}">`);
+    }
+
+    putLoadingElement() {
       $(this.book).prepend('<div class="progress"><span></span></div>');
     }
 
-    setPercentage(percentageElement, percentage) {
+    setLoadedPercentage(percentageElement, percentage) {
       percentageElement.css("width", percentage + "%");
 
       if (percentage == 100) {
@@ -88,8 +95,8 @@
       }
     }
 
-    checkPercentage() {
-      this.putPercentageElement();
+    checkLoadedPercentage() {
+      this.putLoadingElement();
 
       var imagesToLoad = this.opened ? this.pages.length : 2;
       var imagesLoaded = 0;
@@ -102,34 +109,108 @@
             imagesLoaded++;
             var percentage = 100 / (imagesToLoad / imagesLoaded);
 
-            this.setPercentage(percentageElement, percentage);
+            this.setLoadedPercentage(percentageElement, percentage);
           });
         });
     }
 
     initHoverZone() {
-      var settings = this.settings;
       var book = this.book;
+      var that = this;
 
-      $(this.book).mousemove(function(event) {
-        var relX = (
-          (event.pageX - $(this).offset().left) / (settings.width / 2) -
-          1
-        ).toFixed(2);
+      $(this.book)
+        .on("mouse-position", function(event) {
+          $(book).removeClass("transition");
 
-        var relY = (
-          (event.pageY - $(this).offset().top) / (settings.height / 2) -
-          1
-        ).toFixed(2);
+          var distance = that.getDistancePercentage(event, 10, 80),
+            degrees = that.getDegreesPercentage(event, 5, 100);
 
-        var relBoxCoords = "(" + relX + " - " + relY + ")";
+          if (degrees != 0) {
+            var distanceBackup = distance;
+            distance = (distance * (100 - degrees)) / 100;
+            degrees = (distanceBackup * degrees) / 100;
+          }
 
-        // console.log(relX);
+          if (["II", "III", "II-III"].includes(event.mousePosition.quadrant)) {
+            distance *= -1;
+          }
 
-        $(book)
-          .find(".pages")
-          .css("transform", `rotateX(${relY * 180 / -4}deg) rotateY(${relX * 180}deg)`);
-      });
+          if (["III", "III-IV", "IV"].includes(event.mousePosition.quadrant)) {
+            degrees *= -1;
+          }
+
+          $(book)
+            .find(".pages")
+            .css(
+              "transform",
+              `rotateX(${(degrees * 1.8) / 4}deg)
+                rotateY(${distance * 1.8}deg)`
+            );
+        })
+        .on("mouseleave", function(event) {
+          $(book)
+            .addClass("transition")
+            .find(".pages")
+            .css(
+              "transform",
+              `rotateX(0deg)
+                rotateY(0deg)`
+            );
+        });
+    }
+
+    getDistancePercentage(event, offset, limit) {
+      var trimmedPercentage = this.getPercentageWithLimits(
+        event.mousePosition.distance,
+        event.currentTarget.clientWidth / 2,
+        offset,
+        limit
+      );
+
+      return this.trimPercentage(trimmedPercentage);
+    }
+
+    getDegreesPercentage(event, offset, limit) {
+      var trimmedPercentage = this.getPercentageWithLimits(
+        this.getCurrentDegrees(event),
+        90,
+        offset,
+        limit
+      );
+
+      return this.trimPercentage(trimmedPercentage);
+    }
+
+    getCurrentDegrees(event) {
+      switch (event.mousePosition.quadrant) {
+        case "I":
+          return 90 - event.mousePosition.degrees;
+        case "II":
+          return event.mousePosition.degrees - 270;
+        case "III":
+          return 270 - event.mousePosition.degrees;
+        case "IV":
+          return event.mousePosition.degrees - 90;
+        case "II-I":
+        case "III-IV":
+          return 90;
+        default:
+          return 0;
+      }
+    }
+
+    getPercentageWithLimits(distance, totalDistance, offset, limit) {
+      if (typeof limit == "undefined") limit = 100 - offset;
+      var percentage = (distance / totalDistance) * 100;
+
+      return ((percentage - offset) / (limit - offset)) * 100;
+    }
+
+    trimPercentage(percentage) {
+      if (percentage < 0) return 0;
+      if (percentage > 100) return 100;
+
+      return percentage.toFixed(2);
     }
   }
 
@@ -155,7 +236,9 @@
       sheetsCount--;
     }
 
-    book.checkPercentage();
+    book.addMold();
+
+    book.checkLoadedPercentage();
 
     book.initHoverZone();
   };

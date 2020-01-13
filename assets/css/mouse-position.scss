@@ -17,54 +17,5 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-
-    span.inner {
-      position: absolute;
-      width: 25%;
-      height: 25%;
-      background-color: firebrick;
-      border-radius: 50%;
-    }
-
-    span.outer {
-      position: absolute;
-      width: 90%;
-      height: 90%;
-      background-color: orange;
-      border-radius: 50%;
-    }
-
-    p.info {
-      position: absolute;
-      color: white;
-      font-size: 42px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    &::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      height: 50%;
-      width: 1px;
-      background-color: white;
-      z-index: 1;
-      transform: rotate(90deg * 0.2);
-      transform-origin: bottom;
-    }
-
-    &::after {
-      content: "";
-      position: absolute;
-      right: 0;
-      width: 50%;
-      height: 1px;
-      background-color: white;
-      z-index: 1;
-      transform: rotate(90deg * -0.2);
-      transform-origin: left;
-    }
   }
 }
