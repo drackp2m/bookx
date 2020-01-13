@@ -14,10 +14,9 @@ body {
 
   .book {
     position: relative;
-    width: 250px;
-    height: 300px;
+    width: 400px;
+    height: 480px;
     transform-style: preserve-3d;
-    backface-visibility: visible;
     transition: transform $bookFlipTransitionDuration ease-in-out;
     cursor: pointer;
 
@@ -28,12 +27,8 @@ body {
       object-fit: cover;
     }
 
-    .sheet {
-      backface-visibility: hidden;
-
-      > *:first-child {
-        transform: rotateY(-180deg);
-      }
+    .sheet > *:first-child {
+      transform: rotateY(-180deg) translateZ(0.5px);
     }
 
     > * {

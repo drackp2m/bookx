@@ -1,12 +1,12 @@
 $.fn.Book = function() {
   const book = this;
-  const pages = $(book).find('> *');
+  const pages = $(book).find("> *");
 
   checkPages(pages);
 
   let sheets = pages.length / 2;
 
-  while(sheets >= 1) {
+  while (sheets >= 1) {
     const lastPage = pages[sheets * 2 - 2];
     const penultimagePage = pages[sheets * 2 - 1];
 
@@ -21,12 +21,8 @@ $.fn.Book = function() {
     sheets--;
   }
 
-  // pages.each((index, page) => {
-  //   $(page).css('z-index', pages.length - index);
-  // });
-
   function printError(message) {
-    throw new Error(message)
+    throw new Error(message);
   }
 
   function printWarning(message) {
@@ -41,7 +37,9 @@ $.fn.Book = function() {
     const pass = pages.length >= 4 && pages.length % 2 === 0;
 
     if (!pass) {
-      printError('The number of pages in the book must be even and greater than four.')
+      printError(
+        "The number of pages in the book must be even and greater than four."
+      );
     }
   }
 };
