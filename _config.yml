@@ -20,6 +20,7 @@
 
 
 # Build settings
+url: http://mysite.com
 sass:
   sass_dir: _scss
   style: compact
