@@ -8,11 +8,14 @@
     <title>{{ page.title }}</title>
 
     <link rel="stylesheet" href="assets/css/normalize.css" type="text/css" />
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css" />
     <link rel="stylesheet" href="assets/css/home.css" type="text/css" />
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
   </head>
 
   <body>
+    {% include menu.html %}
+
     <div class="book">
       <img src="data:assets/images/front.jpg" alt="front" />
       <img src="data:assets/images/white.jpg" alt="white page" />

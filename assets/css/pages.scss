@@ -1,0 +1,80 @@
+---
+---
+
+@import "colors";
+@import "variables";
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  perspective: 1200px;
+  background-color: $main;
+
+  .book {
+    position: relative;
+    width: 400px;
+    height: 480px;
+    transform-style: preserve-3d;
+    transition: transform $bookFlipTransitionDuration ease-in-out;
+    cursor: pointer;
+
+    img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .sheet > *:first-child {
+      transform: rotateY(-180deg) translateZ(0.5px);
+    }
+
+    > * {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform-style: preserve-3d;
+      transform-origin: left center;
+      transition: transform $bookFlipTransitionDuration ease-in-out,
+        box-shadow $bookShadowTransitionDuration ease-in-out;
+    }
+
+    &:hover {
+      transform: translate(50%);
+
+      > * {
+        &:nth-child(1) {
+          transform: rotateY(-20deg);
+        }
+
+        &:nth-child(2) {
+          transform: rotateY(-30deg);
+          box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        }
+
+        &:nth-child(3) {
+          transform: rotateY(-40deg);
+          box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        }
+
+        &:nth-child(4) {
+          transform: rotateY(-140deg);
+          box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        }
+
+        &:nth-child(5) {
+          transform: rotateY(-150deg);
+          box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        }
+
+        &:nth-child(6) {
+          transform: rotateY(-160deg);
+          box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        }
+      }
+    }
+  }
+}
