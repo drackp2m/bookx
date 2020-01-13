@@ -1,0 +1,37 @@
+---
+---
+
+body {
+  font-family: sans-serif;
+
+  ul.menu {
+    color: white;
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    li {
+      text-transform: uppercase;
+      display: inline;
+
+      &::after {
+        content: "|";
+        margin: 0 10px;
+      }
+
+      &:last-child::after {
+        content: none;
+      }
+
+      a {
+        color: white;
+        text-decoration: none;
+
+        &:hover {
+          opacity: 0.7;
+        }
+      }
+    }
+  }
+}
