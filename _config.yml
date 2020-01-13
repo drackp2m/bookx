@@ -20,7 +20,7 @@
 
 
 # Build settings
-url: http://mysite.com
+url: https://drackp2m.github.io/book/
 sass:
   sass_dir: _scss
   style: compact
