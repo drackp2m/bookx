@@ -13,7 +13,7 @@ body {
 
   .book {
     position: relative;
-    transition: transform $bookFlipTransitionDuration ease-in-out;
+    // transition: transform $bookFlipTransitionDuration ease-in-out;
     perspective: 1200px;
 
     .progress {
@@ -26,8 +26,8 @@ body {
       box-sizing: border-box;
       overflow: hidden;
       opacity: 0.6;
-      transition: opacity $bookFlipTransitionDuration ease-in-out
-        $progressDelayOpacity;
+      // transition: opacity $bookFlipTransitionDuration ease-in-out
+        // $progressDelayOpacity;
 
       &.transparent {
         opacity: 0;
@@ -38,7 +38,7 @@ body {
         width: 0%;
         height: 4px;
         background-color: #888888;
-        transition: width $bookFlipTransitionDuration ease-in-out;
+        // transition: width $bookFlipTransitionDuration ease-in-out;
       }
     }
 
@@ -58,8 +58,8 @@ body {
         background-color: white;
         overflow: hidden;
         transform-origin: left center;
-        transition: transform $bookFlipTransitionDuration ease-in-out,
-          box-shadow $bookShadowTransitionDuration ease-in-out;
+        // transition: transform $bookFlipTransitionDuration ease-in-out,
+          // box-shadow $bookShadowTransitionDuration ease-in-out;
 
         img {
           position: absolute;
@@ -81,10 +81,6 @@ body {
         transform: rotateY(90deg) translateX(1px);
         transform-origin: left;
       }
-    }
-
-    &.transition .pages {
-      transition: transform $bookFlipTransitionDuration ease-in-out;
     }
   }
 }
