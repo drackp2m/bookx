@@ -1,5 +1,8 @@
+var transition = 0.5;
+
 (function($) {
   class Book {
+    hoverTimestamp = true;
     book;
     settings;
     pages;
@@ -120,7 +123,17 @@
 
       $(this.book)
         .on("mouse-position", function(event) {
-          $(book).removeClass("transition");
+          var seconds = false;
+          if (that.hoverTimestamp == true) {
+            that.hoverTimestamp = +new Date();
+          }
+          if (that.hoverTimestamp != false) {
+            seconds = (transition - (+new Date() - that.hoverTimestamp) / 1000).toFixed(2);
+            if (seconds < 0) {
+              seconds = false;
+              that.hoverTimestamp = false;
+            }
+          }
 
           var distance = that.getDistancePercentage(event, 10, 80),
             degrees = that.getDegreesPercentage(event, 5, 100);
@@ -141,21 +154,21 @@
 
           $(book)
             .find(".pages")
-            .css(
-              "transform",
-              `rotateX(${(degrees * 1.8) / 4}deg)
-                rotateY(${distance * 1.8}deg)`
-            );
+            .css({
+              transition: seconds ? `transform ${seconds}s ease-in-out` : 'none',
+              transform: `rotateX(${(degrees * 0.9) / 2.5}deg)
+                rotateY(${(distance * 1.8) / 1.1}deg)`
+            });
         })
         .on("mouseleave", function(event) {
+          that.hoverTimestamp = true;
           $(book)
-            .addClass("transition")
             .find(".pages")
-            .css(
-              "transform",
-              `rotateX(0deg)
+            .css({
+              transition: `transform ${transition}s ease-in-out`,
+              transform: `rotateX(0deg)
                 rotateY(0deg)`
-            );
+            });
         });
     }
 
