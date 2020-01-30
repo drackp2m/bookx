@@ -1,20 +1,12 @@
-var transition = 0.5;
-
 (function($) {
   class Book {
-    hoverTimestamp = true;
-    book;
-    settings;
-    pages;
-    opened = false;
-
     constructor(element, settings) {
       this.book = element;
       this.settings = settings;
       this.pages = $(element).find("> *");
       this.book.css({
-        width: this.settings.width + "px",
-        height: this.settings.height + "px"
+        width: this.settings.book.width + "px",
+        height: this.settings.book.height + "px"
       });
     }
 
@@ -117,31 +109,57 @@ var transition = 0.5;
         });
     }
 
+    getTransitionSeconds() {
+      var seconds = 0;
+
+      if (typeof this.hoverTimestamp == "undefined") {
+        this.hoverTimestamp = +new Date();
+      }
+
+      if (this.hoverTimestamp != 0) {
+        seconds = (
+          this.settings.overview.animationDuration -
+          (+new Date() - this.hoverTimestamp) / 1000
+        ).toFixed(2);
+
+        if (seconds < 0) {
+          seconds = 0;
+          this.hoverTimestamp = 0;
+        }
+      }
+
+      return seconds;
+    }
+
     initHoverZone() {
       var book = this.book;
       var that = this;
 
       $(this.book)
         .on("mouse-position", function(event) {
-          var seconds = false;
-          if (that.hoverTimestamp == true) {
-            that.hoverTimestamp = +new Date();
-          }
-          if (that.hoverTimestamp != false) {
-            seconds = (transition - (+new Date() - that.hoverTimestamp) / 1000).toFixed(2);
-            if (seconds < 0) {
-              seconds = false;
-              that.hoverTimestamp = false;
-            }
-          }
+          var seconds = that.getTransitionSeconds();
 
-          var distance = that.getDistancePercentage(event, 10, 80),
-            degrees = that.getDegreesPercentage(event, 5, 100);
+          var distanceOffset = that.settings.overview.innerOffset,
+            distanceLimit = 100 - that.settings.overview.outerOffset,
+            xOffset = that.settings.overview.xOffset,
+            degreesOffset = xOffset == 0 ? xOffset : xOffset / 2,
+            yOffset = that.settings.overview.yOffset,
+            degreesLimit = 100 - (yOffset == 0 ? yOffset : yOffset / 2),
+            distance = that.getDistancePercentage(
+              event,
+              distanceOffset,
+              distanceLimit
+            ),
+            degrees = that.getDegreesPercentage(
+              event,
+              degreesOffset,
+              degreesLimit
+            );
 
           if (degrees != 0) {
-            var distanceBackup = distance;
+            var originalDistance = distance;
             distance = (distance * (100 - degrees)) / 100;
-            degrees = (distanceBackup * degrees) / 100;
+            degrees = (originalDistance * degrees) / 100;
           }
 
           if (["II", "III", "II-III"].includes(event.mousePosition.quadrant)) {
@@ -155,17 +173,23 @@ var transition = 0.5;
           $(book)
             .find(".pages")
             .css({
-              transition: seconds ? `transform ${seconds}s ease-in-out` : 'none',
-              transform: `rotateX(${(degrees * 0.9) / 2.5}deg)
-                rotateY(${(distance * 1.8) / 1.1}deg)`
+              transition: seconds
+                ? `transform ${seconds}s ease-in-out`
+                : "none",
+              transform: `rotateX(${(degrees *
+                that.settings.overview.yRotation) /
+                100}deg)
+                rotateY(${(distance * that.settings.overview.xRotation) /
+                  100}deg)`
             });
         })
         .on("mouseleave", function(event) {
-          that.hoverTimestamp = true;
+          delete that.hoverTimestamp;
+
           $(book)
             .find(".pages")
             .css({
-              transition: `transform ${transition}s ease-in-out`,
+              transition: `transform ${that.settings.overview.animationDuration}s ease-in-out`,
               transform: `rotateX(0deg)
                 rotateY(0deg)`
             });
@@ -213,7 +237,10 @@ var transition = 0.5;
     }
 
     getPercentageWithLimits(distance, totalDistance, offset, limit) {
-      if (typeof limit == "undefined") limit = 100 - offset;
+      if (typeof limit == "undefined") {
+        limit = 100 - offset;
+      }
+
       var percentage = (distance / totalDistance) * 100;
 
       return ((percentage - offset) / (limit - offset)) * 100;
@@ -229,9 +256,29 @@ var transition = 0.5;
 
   $.fn.Book = function(options) {
     var settings = $.extend(
+      true,
       {
-        width: 400,
-        height: 480
+        book: {
+          width: 400,
+          height: 480
+        },
+        overview: {
+          zoom: 20,
+          innerOffset: 10,
+          outerOffset: 20,
+          xOffset: 10,
+          yOffset: 0,
+          xRotation: 170,
+          yRotation: 30,
+          animationDuration: 0.5
+        },
+        view: {
+          zoom: 40,
+          maxAngleOpen: 180,
+          minAngleOpen: 150,
+          raisedPages: 7,
+          animationDuration: 0.3
+        }
       },
       options
     );
@@ -257,4 +304,10 @@ var transition = 0.5;
   };
 })(jQuery);
 
-$("div.book").Book(/* { width: 250, height: 300 } */);
+$("div.book").Book({
+  book: { width: 250, height: 300 },
+  overview: {
+    animationDuration: 0.3,
+    yRotation: 40
+  }
+});
